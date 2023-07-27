@@ -43,6 +43,4 @@ The frontend of this project is responsible for the user interface and interacti
 - Backend: Node.js, Express, Axios, Polygon.io API
 - Frontend: React, Axios, CSS.
 
-## How to Run
 
-Provide instructions on how to run the project locally, including any necessary commands or scripts.
