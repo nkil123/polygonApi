@@ -1,46 +1,74 @@
-import React, {useState} from 'react';
-import './StockForm.css'; // Import the CSS file for styles
-import StockData from '../../molecules/StockData/StockData';
+import React, { useState } from "react";
+import "./StockForm.css"; // Import the CSS file for styles
+import StockDataCard from "../../molecules/StockDataCard/StockDataCard";
+import axios from "axios";
+import displayFlashMessage from "../../services/flashMessage";
+import { apiResponse, baseUrl } from "../../network/constants";
+import { END_POINT } from "../../network/apiPathConfigs";
+
+const alphabeticRegex = /^[A-Za-z]+$/;
 
 const StockForm = () => {
-  const [symbol, setSymbol] = useState ('');
-  const [selectedDate, setSelectedDate] = useState ('');
-  const [stockData, setStockData] = useState (null);
+  const [stockKey, setStockkey] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [stockData, setStockData] = useState(null);
 
-  const handleSymbolChange = event => {
-    setSymbol (event.target.value);
+  const handleStockkeyChange = (event) => {
+    let inputValue = event.target.value;
+    const isAlphabetic = alphabeticRegex.test(inputValue);
+
+    if (!isAlphabetic) {
+      displayFlashMessage("Only alphabets are allowed", apiResponse.FAILURE);
+      return;
+    }
+
+    //making upper case because the stockkey is alwasy uppercase and only alphabets
+    setStockkey(inputValue?.toUpperCase());
   };
 
-  const handleDateChange = event => {
-    setSelectedDate (event.target.value);
+  const handleDateChange = (event) => {
+    const date = event.target.value;
+    // Get the current date
+    const currentDate = new Date().toISOString().split("T")[0];
+
+    // Only update the selectedDate state if the selected date is not in the future
+    if (date <= currentDate) {
+      setSelectedDate(event.target.value);
+    } else {
+      displayFlashMessage(
+        "Please select a date that is not in the future.",
+        apiResponse.FAILURE
+      );
+    }
   };
 
-  const handleSubmit = event => {
-    event.preventDefault ();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    // API endpoint URL - Replace with your actual API endpoint
-    const apiUrl = `http://localhost:5000/api/fetchStockData?symbol=${symbol}&date=${selectedDate}`;
+    const apiUrl = `${baseUrl}${END_POINT.getStockDataByKeyAndDate}`;
 
-    fetch (apiUrl)
-      .then (response => response.json ())
-      .then (data => {
-        setStockData (data); // Save the fetched data in the state
-      })
-      .catch (error => {
-        console.error ('Error fetching data:', error);
+    try {
+      const result = await axios.post(apiUrl, {
+        date: selectedDate,
+        stockKey: stockKey
       });
+      displayFlashMessage("Data fetched successfully", apiResponse.SUCCESS);
+      setStockData(result?.data?.data || null);
+    } catch (err) {
+      setStockData(null);
+      displayFlashMessage("No Data Found", apiResponse.FAILURE);
+    }
   };
 
   return (
     <div className="stock-form-container">
-
       <form className="stock-form" onSubmit={handleSubmit}>
         <label>
           Stock Symbol:
           <input
             type="text"
-            value={symbol}
-            onChange={handleSymbolChange}
+            value={stockKey}
+            onChange={handleStockkeyChange}
             required
           />
         </label>
@@ -57,7 +85,7 @@ const StockForm = () => {
         <br />
         <button type="submit">Submit</button>
       </form>
-      {stockData && <StockData stockData={stockData} />}
+      {stockData && <StockDataCard stockData={stockData} />}
     </div>
   );
 };
