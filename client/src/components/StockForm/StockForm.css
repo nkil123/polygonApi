@@ -1,0 +1,78 @@
+.stock-form-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.stock-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.stock-details {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.stock-details h2 {
+  margin-bottom: 15px;
+}
+
+.stock-details p {
+  margin: 5px 0;
+}
+
+.stock-details p:first-child {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.stock-details p span {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.stock-details p.up {
+  color: #28a745;
+}
+
+.stock-details p.down {
+  color: #dc3545;
+}
+
