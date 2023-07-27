@@ -1,0 +1,61 @@
+.stock-ticker {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stock-ticker h2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #4a90e2;
+}
+
+.stock-card {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stock-card-icon {
+  font-size: 32px;
+  margin-right: 15px;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.stock-card-label {
+  font-size: 22px;
+  font-weight: bold;
+  color: #4a90e2;
+}
+
+.stock-card-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Adjust the layout for small screens */
+@media (max-width: 600px) {
+  .stock-ticker {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Hover animation for stock cards */
+.stock-card:hover {
+  transform: translateY(-5px); /* Lift the card slightly when hovered */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
